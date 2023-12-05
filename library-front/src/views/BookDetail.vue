@@ -11,7 +11,7 @@ export default {
       console.log(this.$route.params.bookID)
     },
     getInfo() {
-      fetch(`http://127.0.0.1:8000/book/${this.$route.params.bookID}`, {
+      fetch(`http://127.0.0.1:8000/get_book_by_id/${this.$route.params.bookID}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

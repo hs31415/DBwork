@@ -7,10 +7,11 @@ class UserRegistration(BaseModel):
     account: str
     password: str
 
-async def login(user_data: UserRegistration, conn: pymysql.connections.Connection):
+async def register(user_data: UserRegistration, conn: pymysql.connections.Connection):
     try:
         account = user_data.account
         password = user_data.password
+        print(account)
         # 创建游标对象
         with conn.cursor() as cursor:
             # 查询账号是否已存在

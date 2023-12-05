@@ -1,6 +1,7 @@
 <script>
 import {ref} from 'vue'
 import router from "@/router"
+import { ElMessage } from 'element-plus'
 export default {
   created() {
     this.getBooksInfo();
@@ -10,7 +11,7 @@ export default {
       router.push({name: 'BookDetail',params:{'bookID':index}})
     },
     getBooksInfo() {
-      fetch('http://127.0.0.1:8000/books', {
+      fetch('http://127.0.0.1:8000/get_books', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
