@@ -11,6 +11,10 @@ export default {
       // 处理跳转到注册页的逻辑
       router.push({name: 'Register'})
     },
+    goTo_adLogin(){
+      //处理跳转到管理员登录页的逻辑
+      router.push({name:'adLogin'})
+    }
   },
 };
 </script>
@@ -21,6 +25,7 @@ export default {
     <div class="buttons">
       <el-button type="primary" size="large" @click="goToLogin">登录</el-button>
       <el-button size="large" @click="goToRegister">注册</el-button>
+      <el-button class="adLogin" type="info" plain @click="goTo_adLogin" >管理员登录</el-button>
     </div>
   </div>
 </template>
@@ -48,5 +53,11 @@ export default {
   display: flex;
   justify-content: center;
   gap: 100px;
+}
+.adLogin{
+  display: flex;
+  position:absolute;
+  right: 1rem;
+  bottom: 1rem
 }
 </style>

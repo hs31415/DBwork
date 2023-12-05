@@ -10,6 +10,7 @@ import BorrowingRecord from '../views/BorrowingRecord.vue'
 import UserInfo from '../views/UserInfo.vue'
 import test from '../views/test.vue'
 import BookDetail from '../views/BookDetail.vue'
+import adLogin from '../views/adLogin.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/Register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/adLogin',
+      name: 'adLogin',
+      component: adLogin
     },
     {
       path: '/Home',
