@@ -1,6 +1,7 @@
 <script>
 import {ref} from 'vue'
 import router from "@/router"
+import { ElMessage } from 'element-plus'
 export default {
   methods: {
     goToLogin() {
@@ -11,11 +12,68 @@ export default {
       // 处理跳转到注册页的逻辑
       router.push({name: 'Register'})
     },
-    goTo_adLogin(){
-      //处理跳转到管理员登录页的逻辑
-      router.push({name:'adLogin'})
+    admin(){
+      this.formVisible=true
+    },
+    adLogin(){
+      fetch(`http://127.0.0.1:8000/setAdmin/${this.input}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('密码错误');
+        }
+      })
+      .then(data => {
+        if (data.message === '密码错误') {
+          ElMessage.error("密码错误");
+          console.log(data)
+        } else {
+          router.push({name: 'adLogin'})
+        }
+      })
+      .catch(error => {
+        ElMessage.error("密码错误")
+      });
+    },
+    adRegister(){
+      fetch(`http://127.0.0.1:8000/setAdmin/${this.input}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('密码错误');
+        }
+      })
+      .then(data => {
+        if (data.message === '密码错误') {
+          ElMessage.error("密码错误");
+          console.log(data)
+        } else {
+          router.push({name: 'adRegister'})
+        }
+      })
+      .catch(error => {
+        ElMessage.error("密码错误")
+      });
     }
   },
+  data(){
+    return{
+      input:ref(),
+      formVisible:ref(false)
+    }
+  }
 };
 </script>
 
@@ -25,9 +83,28 @@ export default {
     <div class="buttons">
       <el-button type="primary" size="large" @click="goToLogin">登录</el-button>
       <el-button size="large" @click="goToRegister">注册</el-button>
-      <el-button class="adLogin" type="info" plain @click="goTo_adLogin" >管理员登录</el-button>
+      <el-button class="adLogin" type="info" plain @click="admin" >管理员模式</el-button>
     </div>
   </div>
+  <el-dialog v-model="formVisible" title="管理员模式验证" width="10rem" align-center>
+    <el-form>
+      <el-form-item label="输入密码">
+        <el-input
+          v-model="input"
+          type="password"
+          placeholder="Please input password"
+          show-password
+        />
+      </el-form-item>
+      <el-button type="primary" plain style="position: relative;left: 55%;" @click="adRegister">
+        注册
+      </el-button>
+      <el-button type="primary" plain style="position: relative;left: 60%;" @click="adLogin">
+        登录
+      </el-button>
+    </el-form>
+
+  </el-dialog>
 </template>
 
 <style scoped>

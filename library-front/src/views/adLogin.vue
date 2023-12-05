@@ -13,11 +13,10 @@ export default {
   },
   methods: {
     goBack() {
-      // 处理返回按钮点击事件，例如跳转到 home 页面
-      router.push({name: 'Star'})
+      this.$router.go(-1);
     },
     Login() {
-      fetch('http://127.0.0.1:8000/login', {
+      fetch('http://127.0.0.1:8000/ADlogin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +41,7 @@ export default {
           ElMessage.success("登录成功");
           localStorage.setItem("account",this.form.account)
           console.log(data);
-          router.push({name: 'BooksShow'})
+          router.push({name: 'adminView'})
         }
       })
       .catch(error => {
@@ -69,11 +68,11 @@ export default {
     <el-main>  
       <div class="login">
         <div class="content">
-          <el-form :model="form" label-position="left" label-width="100px" ref="form">
-            <el-form-item label="管理员账号" prop="account">
+          <el-form :model="form" label-position="left" label-width="80px" ref="form">
+            <el-form-item label="账号" prop="account">
               <el-input v-model="form.account" placeholder="请输入账号" clearable></el-input>
             </el-form-item>
-            <el-form-item label="管理员密码" prop="password">
+            <el-form-item label="密码" prop="password">
               <el-input
                 type="password"
                 v-model="form.password"

@@ -1,15 +1,12 @@
-import pymysql
-import bcrypt
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from login import login
-from register import register
-from books import get_book_by_id, get_books
-from borrow import borrowRecord, borrow, borrowInfo
-from returnbook import returnBook
-from userinfo import userInfo, changeName
+from login import *
+from register import *
+from books import *
+from borrow import *
+from returnbook import *
+from userinfo import *
 
 class UserRegistration(BaseModel):
     account: str
@@ -45,6 +42,7 @@ conn = pymysql.connect(
     database='mylibrary',
 )
 
+
 # 将连接对象传递给视图函数
 @app.post("/register")
 async def register_router(user_data: UserRegistration):
@@ -53,6 +51,14 @@ async def register_router(user_data: UserRegistration):
 @app.post("/login")
 async def login_router(user_data: UserRegistration):
     return await login(user_data, conn)
+
+@app.post("/ADregister")
+async def register_router(user_data: UserRegistration):
+    return await ADregister(user_data, conn)
+
+@app.post("/ADlogin")
+async def login_router(user_data: UserRegistration):
+    return await ADlogin(user_data, conn)
 
 @app.get("/get_books")
 async def get_books_router():
@@ -85,6 +91,19 @@ async def userInfo_router(account: str):
 @app.post('/changeName')
 async def changeName_router(body: userName):
     return await changeName(body, conn)
+
+@app.get("/setAdmin/{password}")
+async def setAdmin(password: int):
+    try:
+        password = password
+        print(password)
+        print(int(conn.password))
+        if(password != int(conn.password)):
+            return {'message': '密码错误'}
+        else:
+            return {'message': '密码正确'}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.on_event("shutdown")

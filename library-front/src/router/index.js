@@ -11,6 +11,10 @@ import UserInfo from '../views/UserInfo.vue'
 import test from '../views/test.vue'
 import BookDetail from '../views/BookDetail.vue'
 import adLogin from '../views/adLogin.vue'
+import adRegister from '../views/adRegister.vue'
+import adminView from '../views/adminView.vue'
+import addBook from '../views/addBook.vue'
+import editBook from '../views/editBook.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,9 +40,31 @@ const router = createRouter({
       component: adLogin
     },
     {
+      path: '/adRegister',
+      name: 'adRegister',
+      component: adRegister
+    },
+    {
       path: '/Home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/adminView',
+      name: 'adminView',
+      component: adminView,
+      children: [
+        {
+          path: '/addBook',
+          name: 'addBook',
+          component: addBook,
+        },
+        {
+          path: '/editBook',
+          name: 'editBook',
+          component: editBook,
+        },
+      ]
     },
     {
       path: '/BooksView',
