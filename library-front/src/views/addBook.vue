@@ -1,17 +1,55 @@
 <script>
 import {ref} from 'vue'
 import router from "@/router"
+import { ElMessage } from 'element-plus'
 export default {
   methods: {
+    addBook(){
+      console.log(this.form)
+    },
+    clear(){
+      this.form={}
+    },
+    add() {
+      fetch('http://127.0.0.1:8000/addBook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title:this.form.title,
+          author:this.form.author,
+          publisher:this.form.publisher,
+          description:this.form.description
+        }),
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('添加失败');
+        }
+      })
+      .then(data => {
+        if (data.message === '已有相同书籍') {
+          ElMessage.error("已有相同书籍");
+          console.log(data)
+        } else {
+          ElMessage.success("添加成功");
+          console.log(data);
+        }
+      })
+      .catch(error => {
+        ElMessage.error("添加失败")
+      });
+    },
   },
   data(){
     return{
       form:ref({
-        id:'',
         title:'',
         author:'',
         publisher:'',
-        count:'',
         description:''
       })
     }
@@ -20,30 +58,24 @@ export default {
 </script>
 
 <template>
-  <el-form :inline="true" :model="form" class="demo-form-inline">
-    <el-form-item label="图书编号">
-      <el-input v-model="form.id" placeholder="Approved by" clearable />
+  <el-form label-position="top" :model="form" class="demo-form-inline">
+    <el-form-item label="书名">
+      <el-input v-model="form.title" clearable />
     </el-form-item>
-    <el-form-item label="Activity zone">
-      <el-select
-        v-model="form.region"
-        placeholder="Activity zone"
-        clearable
-      >
-        <el-option label="Zone one" value="shanghai" />
-        <el-option label="Zone two" value="beijing" />
-      </el-select>
+    <el-form-item label="作者">
+      <el-input v-model="form.author" clearable />
     </el-form-item>
-    <el-form-item label="Activity time">
-      <el-date-picker
-        v-model="form.date"
-        type="date"
-        placeholder="Pick a date"
-        clearable
-      />
+    <el-form-item label="出版商">
+      <el-input v-model="form.publisher" clearable />
+    </el-form-item>
+    <el-form-item label="描述">
+      <el-input v-model="form.description" type="textarea" placeholder="请输入简要描述(不超过200字)" clearable maxlength="200"/>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">Query</el-button>
+      <el-button type="primary" @click="add">确认</el-button>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="clear">清空</el-button>
     </el-form-item>
   </el-form>
 </template>

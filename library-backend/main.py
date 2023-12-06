@@ -22,6 +22,16 @@ class userName(BaseModel):
     account: str
     name: str
 
+class bookInfo(BaseModel):
+    title: str
+    author: str
+    publisher: str
+    description: str
+
+class bookNum(BaseModel):
+    id: int
+    number: int
+
 
 app = FastAPI()
 # 添加跨域请求中间件
@@ -67,23 +77,24 @@ async def get_books_router():
 @app.get("/get_book_by_id/{book_id}")
 async def get_books_router_router(book_id: int):
     return await get_book_by_id(book_id, conn)
-
+@app.post("/addBook")
+async def addBook_router(book_info: bookInfo):
+    return await addBook(book_info, conn)
+@app.post("/addNum")
+async def addNum_router(book_num: bookNum):
+    return await addNum(book_num, conn)
 @app.get("/borrowInfo/{book_id}")
 async def borrowInfo_router(book_id: int):
     return await borrowInfo(book_id, conn)
 @app.post('/borrow')
 async def borrow_router(body: borrowBody):
     return await borrow(body, conn)
-
 @app.get("/borrowRecord/{account}")
 async def borrowRecord_router(account: str):
     return await borrowRecord(account, conn)
-
 @app.post('/returnBook')
 async def returnBook_router(body: borrowBody):
     return await returnBook(body, conn)
-
-
 @app.get("/userInfo/{account}")
 async def userInfo_router(account: str):
     return await userInfo(account, conn)

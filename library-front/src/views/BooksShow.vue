@@ -42,12 +42,13 @@ export default {
 </script>
 
 <template>
-  <el-table :data="infoList" height="500" border style="width: 100%" :default-sort="{ prop: 'id', order: 'ascending' }">
+  <el-table :data="infoList" height="70vh" border style="width: 100%" :default-sort="{ prop: 'id', order: 'ascending' }">
     <el-table-column sortable prop="id" label="图书编号" label-align="center" align="center" />
     <el-table-column prop="title" label="书名" label-align="center" align="center" />
     <el-table-column prop="author" label="作者" label-align="center" align="center" />
     <el-table-column prop="publisher" label="出版社" label-align="center" align="center"  />
-    <el-table-column prop="currentNum" label="数量" label-align="center" align="center"  />
+    <el-table-column prop="count" label="存书量" label-align="center" align="center"  />
+    <el-table-column prop="currentNum" label="可借阅数量" label-align="center" align="center"  />
     <el-table-column fixed="right" label="操作" width="120" label-align="center" align="center">
       <template #default="scope">
         <el-button

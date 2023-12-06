@@ -15,6 +15,7 @@ import adRegister from '../views/adRegister.vue'
 import adminView from '../views/adminView.vue'
 import addBook from '../views/addBook.vue'
 import editBook from '../views/editBook.vue'
+import editDetail from '../views/editDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -102,6 +103,11 @@ const router = createRouter({
       path: '/BookDetail/:bookID',
       name: 'BookDetail',
       component: BookDetail
+    },
+    {
+      path: '/editDetail/:bookID',
+      name: 'editDetail',
+      component: editDetail
     },
   ]
 })

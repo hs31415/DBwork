@@ -41,7 +41,7 @@ export default {
           ElMessage.success("登录成功");
           localStorage.setItem("account",this.form.account)
           console.log(data);
-          router.push({name: 'adminView'})
+          router.push({name: 'addBook'})
         }
       })
       .catch(error => {

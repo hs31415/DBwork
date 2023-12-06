@@ -8,7 +8,7 @@ export default {
   },
   methods: {
     goDetail(index){
-      router.push({name: 'BookDetail',params:{'bookID':index}})
+      router.push({name: 'editDetail',params:{'bookID':index}})
     },
     getBooksInfo() {
       fetch('http://127.0.0.1:8000/get_books', {
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <template>
-  <el-table :data="infoList" height="500" border style="width: 100%" :default-sort="{ prop: 'id', order: 'ascending' }">
+  <el-table :data="infoList" height="70vh" border style="width: 100%" :default-sort="{ prop: 'id', order: 'ascending' }">
     <el-table-column sortable prop="id" label="图书编号" label-align="center" align="center" />
     <el-table-column prop="title" label="书名" label-align="center" align="center" />
     <el-table-column prop="author" label="作者" label-align="center" align="center" />

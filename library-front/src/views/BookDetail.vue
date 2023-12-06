@@ -103,6 +103,7 @@ export default {
           title:'0', 
           author:'0', 
           publisher:'0', 
+          count:'0',
           currentNum:'0',
           description: '0'
         }

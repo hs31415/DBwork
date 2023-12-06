@@ -28,7 +28,7 @@ export default {
         </el-page-header>
       </el-header>
       <el-container>
-        <el-aside width="7rem">
+        <el-aside width="20vw">
           <el-menu
             default-active="1"
             class="el-menu-vertical-demo"

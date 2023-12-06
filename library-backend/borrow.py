@@ -33,9 +33,10 @@ async def borrow(body: borrowBody,conn: pymysql.connections.Connection):
         borrowId = body.book_id
         account = body.account
         # 查询数据库中是否存在该读者
-        sql = "SELECT isBorrow FROM book WHERE id=%s"
+        sql = "SELECT isBorrow, book_id FROM book WHERE id=%s"
         update_sql = "UPDATE book SET isBorrow=1 WHERE id=%s"
         insert_sql = "INSERT INTO borrow (reader_account, book_id) VALUES (%s, %s)"
+        update_books_sql = "UPDATE books SET currentNum=currentNum-1 WHERE id=%s"
         with conn.cursor() as cursor:
             cursor.execute(sql, (borrowId,))
             result = cursor.fetchone()
@@ -49,6 +50,7 @@ async def borrow(body: borrowBody,conn: pymysql.connections.Connection):
                 print("借出图书")
                 cursor.execute(update_sql, (borrowId,))
                 cursor.execute(insert_sql, (account, borrowId))
+                cursor.execute(update_books_sql, (result[1],))
                 conn.commit()
                 return {"message": "借阅成功"}
     except Exception as e:
