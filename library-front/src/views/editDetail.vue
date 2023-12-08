@@ -32,6 +32,29 @@ export default {
         // 在这里处理请求出错的情况
       })
     },
+    showBooks(){
+      this.bookTableVisible=true
+      fetch(`http://127.0.0.1:8000/borrowInfo/${this.$route.params.bookID}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log(data) // 输出获取到的书籍信息
+        this.borrowList=data
+      })
+      .catch(error => {
+        console.error(`Error fetching book: ${error.message}`)
+        // 在这里处理请求出错的情况
+      })
+    },
     editNum(){
       this.dialogTableVisible=true
     },
@@ -93,8 +116,16 @@ export default {
           description: '0'
         }
       ]),
+      borrowList:[
+        {
+          id:'0',
+          isborrow:'0',
+          borrower:'0'
+        }
+      ],
       number:ref(),
-      dialogTableVisible:ref(false)
+      dialogTableVisible:ref(false),
+      bookTableVisible:ref(false)
     }
   },
 };
@@ -128,9 +159,31 @@ export default {
 
   </el-descriptions>
 
-  <el-button class="showBorrow" type="primary" plain @click="editNum">
-    添加图书
-  </el-button>
+  <div class="button">
+     <el-button type="primary" plain @click="showBooks">
+      查看当前图书借阅情况
+    </el-button>
+
+    <el-button type="primary" plain @click="editNum">
+      添加图书
+    </el-button> 
+  </div>
+
+
+  <el-dialog v-model="bookTableVisible" title="当前图书借阅情况">
+    <el-table :data="borrowList">
+      <el-table-column prop="id" label="图书id" label-align="center" align="center" :formatter="formatId"/>
+      <el-table-column prop="isborrow" label="是否借出" label-align="center" align="center">
+        <template #default="scope">
+          <div v-if="scope.row.isborrow">是</div>
+          <div v-if="!scope.row.isborrow">否</div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="borrower" label="借阅者" label-align="center" align="center"/>
+
+    </el-table>
+  </el-dialog>
+
 
   <el-dialog style="max-width: 500px;margin-top: 30vh;" v-model="dialogTableVisible">
     <el-form>
@@ -152,7 +205,7 @@ export default {
   word-wrap: break-word;
   text-align:left;
 }
-.showBorrow{
+.button{
   position: absolute;
   margin: 1rem;
   right: 0;

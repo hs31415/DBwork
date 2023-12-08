@@ -90,7 +90,7 @@ export default {
       <h1>Hello, {{ this.username }}!</h1>
       <div>欢迎使用图书管理系统</div>
   </div>
-  <el-button type="primary" @click="changeName">修改用户名</el-button>
+  <el-button style="position: absolute;left: 1rem;bottom: 1rem;" type="primary" @click="changeName">修改用户名</el-button>
   <el-dialog v-model="dialogFormVisible" title="Shipping address">
     <el-form :model="form">
       <el-form-item label="修改后的用户名" :label-width="140">

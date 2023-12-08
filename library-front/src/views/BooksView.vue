@@ -18,7 +18,7 @@ export default {
         <el-page-header :icon="null">
           <template #title>
             <div class="head-title" @click="goBack">
-              <User style="width: 2rem;"/>
+              <User style="width: 1.3rem;"/>
               个人中心
             </div>
           </template>
@@ -43,13 +43,6 @@ export default {
               <el-menu-item index="2">
                 <el-icon></el-icon>
                 <span>查看借书记录</span>
-              </el-menu-item>
-            </RouterLink>
-
-            <RouterLink to="/BooksReturn">
-              <el-menu-item index="3">
-                <el-icon><document /></el-icon>
-                <span>归还图书</span>
               </el-menu-item>
             </RouterLink>
           </el-menu>

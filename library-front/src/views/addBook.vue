@@ -11,6 +11,10 @@ export default {
       this.form={}
     },
     add() {
+      if (!this.form.title || !this.form.author || !this.form.publisher || !this.form.description) {
+        ElMessage.error("请将信息填写完整！");
+        return
+      }
       fetch('http://127.0.0.1:8000/addBook', {
         method: 'POST',
         headers: {
